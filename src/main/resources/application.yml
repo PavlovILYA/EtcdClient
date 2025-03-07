@@ -1,0 +1,10 @@
+etcd:
+#  endpoint-1: "http://89.169.143.158:2379"
+#  endpoint-2: "http://89.169.148.229:2379"
+#  endpoint-3: "http://51.250.66.12:2379"
+  endpoint-1: "http://127.0.0.1:2379"
+  endpoint-2: "http://127.0.0.1:2380"
+  endpoint-3: "http://127.0.0.1:2381"
+
+useful.work.cron: "*/20 * * * * *"
+election.cron: "*/5 * * * * *"
