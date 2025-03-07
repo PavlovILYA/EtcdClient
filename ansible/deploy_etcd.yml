@@ -1,0 +1,13 @@
+---
+- name: Deploy etcd
+  hosts: all
+  become: yes
+
+  roles:
+    - role: deploy-etcd
+      host1: "89.169.143.158"
+      host2: "89.169.148.229"
+      host3: "51.250.66.12"
+      fqdn1: "etcd1"
+      fqdn2: "etcd2"
+      fqdn3: "etcd3"

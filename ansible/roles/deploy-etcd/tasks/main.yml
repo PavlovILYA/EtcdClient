@@ -1,0 +1,54 @@
+---
+# tasks file for deploy-etcd
+
+- name: Install necessary packages
+  apt_rpm:
+    pkg:
+    - etcd
+    - nano
+    update_cache: yes
+    state: present_not_latest
+  tags: packages
+
+- name: Stop etcd daemon
+  service: name=etcd.service state=stopped enabled=no
+
+- name: Print ansible_fqdn
+  ansible.builtin.debug:
+    msg: ansible_fqdn = {{ ansible_fqdn }}
+
+- name: Load /etc/etcd/etcd.conf to {{ host1 }} ({{ fqdn1 }})
+  template:
+    src: "etcd.1.conf.j2"
+    dest: "/etc/etcd/etcd.conf"
+    group: root
+    owner: root
+    force: yes
+    backup: yes
+    mode: 0644
+  when: ansible_fqdn == fqdn1
+
+- name: Load /etc/etcd/etcd.conf to {{ host2 }} ({{ fqdn2 }})
+  template:
+    src: "etcd.2.conf.j2"
+    dest: "/etc/etcd/etcd.conf"
+    group: root
+    owner: root
+    force: yes
+    backup: yes
+    mode: 0644
+  when: ansible_fqdn == fqdn2
+
+- name: Load /etc/etcd/etcd.conf to {{ host3 }} ({{ fqdn3 }})
+  template:
+    src: "etcd.3.conf.j2"
+    dest: "/etc/etcd/etcd.conf"
+    group: root
+    owner: root
+    force: yes
+    backup: yes
+    mode: 0644
+  when: ansible_fqdn == fqdn3
+
+- name: Start etcd daemon
+  service: name=etcd.service state=started enabled=yes
